@@ -23,6 +23,9 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -44,6 +47,7 @@ const formSchema = z
 type formData = z.infer<typeof formSchema>;
 
 const SignUp = () => {
+  const router = useRouter();
   const form = useForm<formData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,8 +58,25 @@ const SignUp = () => {
     },
   });
 
-  function onSubmit(values: formData) {
-    console.log(values);
+  async function onSubmit(values: formData) {
+    const { data, error } = await authClient.signUp.email({
+      email: values.email,
+      password: values.password,
+      name: values.name,
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+        },
+        onError: (error) => {
+          if (error.error.code === "USER_ALREADY_EXISTS") {
+            toast.error("Email ja cadastrado");
+          }
+          form.setError("email", {
+            message: "Email ja cadastrado",
+          });
+        },
+      },
+    });
   }
 
   return (
