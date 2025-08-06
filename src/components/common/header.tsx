@@ -22,7 +22,7 @@ const Header = () => {
       <Link href="/">
         <Image src="./logo.svg" alt="Bear" width={100} height={24.14} />
       </Link>
-      <div className="flex items-center">
+      <div className="flex items-center gap-3">
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="outline" size="icon">
@@ -36,28 +36,28 @@ const Header = () => {
             <div className="px-5">
               {session?.user ? (
                 <>
-                  <div className="flex items-center justify-between space-y-6">
-                    <div className="flex gap-3">
+                  <div className="flex justify-between space-y-6">
+                    <div className="flex items-center gap-3">
                       <Avatar>
                         <AvatarImage
-                          src={session?.user.image as string | undefined}
+                          src={session?.user?.image as string | undefined}
                         />
                         <AvatarFallback>
-                          {session?.user.name.split(" ")[0]?.[0]}
-                          {session?.user.name.split(" ")[1]?.[0]}
+                          {session?.user?.name?.split(" ")?.[0]?.[0]}
+                          {session?.user?.name?.split(" ")?.[1]?.[0]}
                         </AvatarFallback>
                       </Avatar>
+
                       <div>
                         <h3 className="font-semibold">{session?.user?.name}</h3>
                         <span className="text-muted-foreground block text-xs">
-                          {session?.user.email}
+                          {session?.user?.email}
                         </span>
                       </div>
                     </div>
                     <Button
                       variant="outline"
                       size="icon"
-                      className="-mt-9"
                       onClick={() => authClient.signOut()}
                     >
                       <LogOutIcon />
@@ -66,7 +66,7 @@ const Header = () => {
                 </>
               ) : (
                 <div className="flex items-center justify-between">
-                  <h2 className="font-semibold">Olá, Faça seu login!</h2>
+                  <h2 className="font-semibold">Olá. Faça seu login!</h2>
                   <Button size="icon" asChild variant="outline">
                     <Link href="/authentication">
                       <LogInIcon />
