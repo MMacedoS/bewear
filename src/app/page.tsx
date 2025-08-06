@@ -1,10 +1,9 @@
-import { Button } from "@/components/ui/button";
+import Authentication from "./authentication/page";
 
 const Home = () => {
   return (
-    <div>
-      <h1>Home</h1>
-      <Button>Product</Button>
+    <div className="flex flex-col w-full py-50 items-center gap-6 ">
+      <Authentication />
     </div>
   );
 };
