@@ -21,11 +21,12 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 
 const formSchema = z.object({
   email: z.email("email invalido").min(2).max(50),
-  password: z.string().min(8),
+  password: z.string().min(8, "senha é obrigatória"),
 });
 
 type formData = z.infer<typeof formSchema>;
@@ -63,6 +64,7 @@ const Sign = () => {
                   <FormControl>
                     <Input placeholder="Digite seu email" {...field} />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -79,6 +81,7 @@ const Sign = () => {
                       type="password"
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />

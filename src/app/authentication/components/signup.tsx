@@ -21,11 +21,12 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 
 const formSchema = z
   .object({
-    name: z.string().trim().min(1, "Não pode ser vazio."),
+    name: z.string("Não pode ser vazio.").trim().min(1, "Não pode ser vazio."),
     email: z.email("email invalido").min(2).max(50),
     password: z.string().min(8),
     confirmPassword: z.string().min(8, "deve conter no minimo 8 caracteres"),
@@ -75,6 +76,7 @@ const SignUp = () => {
                   <FormControl>
                     <Input placeholder="Digite seu nome" {...field} />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -87,6 +89,7 @@ const SignUp = () => {
                   <FormControl>
                     <Input placeholder="Digite seu email" {...field} />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -103,6 +106,7 @@ const SignUp = () => {
                       type="password"
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -119,6 +123,7 @@ const SignUp = () => {
                       type="password"
                     />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
