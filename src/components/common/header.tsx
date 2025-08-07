@@ -18,9 +18,9 @@ import Link from "next/link";
 const Header = () => {
   const { data: session } = authClient.useSession();
   return (
-    <header className="flex items-center justify-between p-5">
+    <header className="flex items-center justify-between p-5 ">
       <Link href="/">
-        <Image src="./logo.svg" alt="Bear" width={100} height={24.14} />
+        <Image src="\logo.svg" alt="Bear" width={100} height={24.14} />
       </Link>
       <div className="flex items-center gap-3">
         <Sheet>
