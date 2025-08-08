@@ -25,41 +25,37 @@ const Home = async () => {
   const categories = await db.query.categoryTable.findMany({});
 
   return (
-    <>
-      <Header />
-      <div className="space-y-6">
-        <div className="px-5">
-          <Image
-            src="/banner-01.png"
-            alt="Leve uma vida com estilo"
-            width={0}
-            height={0}
-            sizes="100vw"
-            className="h-auto w-full"
-          />
-        </div>
-
-        <ProductList title="Mais vendidos" products={products} />
-
-        <div className="px-5 w-full">
-          <CategorySelector categories={categories} />
-        </div>
-
-        <div className="px-5">
-          <Image
-            src="/banner-02.png"
-            alt="Leve uma vida com estilo"
-            width={0}
-            height={0}
-            sizes="100vw"
-            className="h-auto w-full"
-          />
-        </div>
-
-        <ProductList title="Produtos Novos" products={newlyCreateProducts} />
-        <Footer />
+    <div className="space-y-6 mb-3">
+      <div className="px-5">
+        <Image
+          src="/banner-01.png"
+          alt="Leve uma vida com estilo"
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="h-auto w-full"
+        />
       </div>
-    </>
+
+      <ProductList title="Mais vendidos" products={products} />
+
+      <div className="px-5 w-full">
+        <CategorySelector categories={categories} />
+      </div>
+
+      <div className="px-5">
+        <Image
+          src="/banner-02.png"
+          alt="Leve uma vida com estilo"
+          width={0}
+          height={0}
+          sizes="100vw"
+          className="h-auto w-full"
+        />
+      </div>
+
+      <ProductList title="Produtos Novos" products={newlyCreateProducts} />
+    </div>
   );
 };
 

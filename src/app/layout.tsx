@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
+import Header from "@/components/common/header";
+import Footer from "@/components/common/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,8 +30,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Toaster />
-        {children}
+        <div className="fixed top-0 w-full">
+          <Header />
+        </div>
+        <div className="py-20">
+          <Toaster />
+          {children}
+        </div>
+        <div className="bottom-0 fixed w-full">
+          <Footer />
+        </div>
       </body>
     </html>
   );

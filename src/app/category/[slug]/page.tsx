@@ -28,21 +28,18 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
   });
 
   return (
-    <>
-      <Header />
-      <div className="px-5 space-y-6">
-        <h2 className="text-xl font-semibold">{category.name}</h2>
-        <div className="grid grid-cols-2 gap-4">
-          {products.map((product) => (
-            <ProductItem
-              key={product.id}
-              product={product}
-              textContainerClassName="max-w-full"
-            />
-          ))}
-        </div>
+    <div className="px-5 space-y-6">
+      <h2 className="text-xl font-semibold">{category.name}</h2>
+      <div className="grid grid-cols-2 gap-4">
+        {products.map((product) => (
+          <ProductItem
+            key={product.id}
+            product={product}
+            textContainerClassName="max-w-full"
+          />
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 
