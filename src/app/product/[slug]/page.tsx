@@ -7,10 +7,11 @@ import { eq } from "drizzle-orm";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import VariantSelector from "./components/variant-selector";
+import QuantitySelector from "./components/quantity-selector";
 
 interface ProductVariantPageProps {
   params: Promise<{ slug: string }>;
-  searchParams?: { variant?: string };
+  searchParams?: Promise<{ variant?: string }>;
 }
 
 const ProductPage = async ({
@@ -18,7 +19,7 @@ const ProductPage = async ({
   searchParams,
 }: ProductVariantPageProps) => {
   const { slug } = await params;
-  const variantSlug = searchParams?.variant || "";
+  const variantSlug = searchParams ? (await searchParams)?.variant : undefined;
 
   const productVariant = await db.query.productTable.findFirst({
     where: eq(productTable.slug, slug),
@@ -74,7 +75,9 @@ const ProductPage = async ({
             {formatCentsToBRL(selectedVariant.price_in_cents)}
           </h3>
         </div>
-        <div>quantidade</div>
+        <div className="px-5">
+          <QuantitySelector />
+        </div>
         <div className="px-5 space-y-4 flex flex-col">
           <Button className="rounded-full" size="lg" variant="outline">
             Adicionar a sacola

@@ -14,6 +14,7 @@ import { authClient } from "@/lib/auth-client";
 import { Avatar } from "../ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import Link from "next/link";
+import Cart from "./Cart";
 
 const Header = () => {
   const { data: session } = authClient.useSession();
@@ -77,6 +78,7 @@ const Header = () => {
             </div>
           </SheetContent>
         </Sheet>
+        <Cart />
       </div>
     </header>
   );

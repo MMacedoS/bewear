@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
+import { NuqsAdapter } from "nuqs/adapters/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,7 +36,7 @@ export default function RootLayout({
         </div>
         <div className="py-20">
           <Toaster />
-          {children}
+          <NuqsAdapter>{children}</NuqsAdapter>
         </div>
         <div className="bottom-0 fixed w-full">
           <Footer />
