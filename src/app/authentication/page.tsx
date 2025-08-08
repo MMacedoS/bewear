@@ -6,8 +6,6 @@ import Header from "@/components/common/header";
 const Authentication = async () => {
   return (
     <>
-      <Header />
-
       <div className="flex flex-col w-full py-25 items-center">
         <div className="w-full max-w-sm gap-6">
           <div className="justify-center">
