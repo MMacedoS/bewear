@@ -24,8 +24,12 @@ export const userTable = pgTable("user", {
     .notNull(),
 });
 
-export const userRelations = relations(userTable, ({ many }) => ({
+export const userRelations = relations(userTable, ({ many, one }) => ({
   shippingAddresses: many(shippingAddressTable),
+  cart: one(cartTable, {
+    fields: [userTable.id],
+    references: [cartTable.user_id],
+  }),
 }));
 
 export const sessionTable = pgTable("session", {
@@ -109,6 +113,10 @@ export const productVariantRelations = relations(
       fields: [productVariantsTable.product_id],
       references: [productTable.id],
     }),
+    item: one(cartItemsTable, {
+      fields: [productVariantsTable.id],
+      references: [cartItemsTable.product_variant_id],
+    }),
   })
 );
 
@@ -153,5 +161,55 @@ export const shippingAddressRelations = relations(
       fields: [shippingAddressTable.user_id],
       references: [userTable.id],
     }),
+    cart: one(cartTable, {
+      fields: [shippingAddressTable.id],
+      references: [cartTable.shipping_address_id],
+    }),
   })
 );
+
+export const cartTable = pgTable("cart", {
+  id: uuid().primaryKey().defaultRandom(),
+  user_id: text()
+    .notNull()
+    .references(() => userTable.id, { onDelete: "cascade" }),
+  shipping_address_id: uuid().references(() => shippingAddressTable.id, {
+    onDelete: "set null",
+  }),
+  created_at: timestamp().notNull().defaultNow(),
+});
+
+export const cartRelations = relations(cartTable, ({ one, many }) => ({
+  user: one(userTable, {
+    fields: [cartTable.user_id],
+    references: [userTable.id],
+  }),
+  shippingAddress: one(shippingAddressTable, {
+    fields: [cartTable.shipping_address_id],
+    references: [shippingAddressTable.id],
+  }),
+  items: many(cartItemsTable),
+}));
+
+export const cartItemsTable = pgTable("cart_item", {
+  id: uuid().primaryKey().defaultRandom(),
+  cart_id: uuid()
+    .notNull()
+    .references(() => cartTable.id, { onDelete: "cascade" }),
+  product_variant_id: uuid()
+    .notNull()
+    .references(() => productVariantsTable.id, { onDelete: "cascade" }),
+  quantity: integer().notNull().default(1),
+  created_at: timestamp().notNull().defaultNow(),
+});
+
+export const cartItemRelations = relations(cartItemsTable, ({ one }) => ({
+  cart: one(cartTable, {
+    fields: [cartItemsTable.cart_id],
+    references: [cartTable.id],
+  }),
+  product_variant: one(productVariantsTable, {
+    fields: [cartItemsTable.product_variant_id],
+    references: [productVariantsTable.id],
+  }),
+}));
