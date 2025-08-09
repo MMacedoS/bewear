@@ -1,13 +1,12 @@
 import ProductList from "@/components/common/productList";
-import { Button } from "@/components/ui/button";
 import { db } from "@/db";
-import { productTable, productVariantsTable } from "@/db/schema";
+import { productTable } from "@/db/schema";
 import { formatCentsToBRL } from "@/helpers/money";
 import { eq } from "drizzle-orm";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import VariantSelector from "./components/variant-selector";
-import QuantitySelector from "./components/quantity-selector";
+import ProductActions from "./components/product-actions";
 
 interface ProductVariantPageProps {
   params: Promise<{ slug: string }>;
@@ -75,17 +74,7 @@ const ProductPage = async ({
             {formatCentsToBRL(selectedVariant.price_in_cents)}
           </h3>
         </div>
-        <div className="px-5">
-          <QuantitySelector />
-        </div>
-        <div className="px-5 space-y-4 flex flex-col">
-          <Button className="rounded-full" size="lg" variant="outline">
-            Adicionar a sacola
-          </Button>
-          <Button className="rounded-full" size="lg">
-            Compre agora
-          </Button>
-        </div>
+        <ProductActions product_variant_id={selectedVariant.id} />
         <div className="px-5">
           <h2 className="text-lg font-semibold">Descrição</h2>
           <p className="text-muted-foreground text-sm">

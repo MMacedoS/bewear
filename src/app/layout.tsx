@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Header from "@/components/common/header";
 import Footer from "@/components/common/footer";
 import { NuqsAdapter } from "nuqs/adapters/next";
+import ReactQueryProvider from "@/providers/react-query";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,16 +32,18 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="fixed top-0 w-full z-5 rounded-b-md ">
-          <Header />
-        </div>
-        <div className="py-20">
-          <Toaster />
-          <NuqsAdapter>{children}</NuqsAdapter>
-        </div>
-        <div className="bottom-0 fixed w-full">
-          <Footer />
-        </div>
+        <ReactQueryProvider>
+          <div className="fixed top-0 w-full z-5 rounded-b-md ">
+            <Header />
+          </div>
+          <div className="py-20">
+            <Toaster />
+            <NuqsAdapter>{children}</NuqsAdapter>
+          </div>
+          <div className="bottom-0 fixed w-full">
+            <Footer />
+          </div>
+        </ReactQueryProvider>
       </body>
     </html>
   );
