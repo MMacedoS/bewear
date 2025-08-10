@@ -5,6 +5,7 @@ import { formatCentsToBRL } from "@/helpers/money";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { removeProductToCart } from "@/actions/remove-cart-product";
 import { toast } from "sonner";
+import { decreaseCartProductToCart } from "@/actions/decrease-cart-product-quantity";
 
 interface productActionsProps {
   id: string;
@@ -44,6 +45,18 @@ const CartItem = ({
     });
   };
 
+  const decrementProductToCartMutation = useMutation({
+    mutationKey: ["decrement-cart-product"],
+    mutationFn: () => decreaseCartProductToCart({ cart_item_id: id }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+    },
+  });
+
+  const handleDecrementClick = () => {
+    decrementProductToCartMutation.mutate();
+  };
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
@@ -60,7 +73,11 @@ const CartItem = ({
             {product_variant_name}
           </p>
           <div className="flex w-[100px] items-center justify-between rounded-3xl border p-1">
-            <Button className="h-4 w-4" variant="ghost" onClick={() => {}}>
+            <Button
+              className="h-4 w-4"
+              variant="ghost"
+              onClick={handleDecrementClick}
+            >
               <MinusIcon />
             </Button>
             <p className="text-xs">{quantity}</p>
