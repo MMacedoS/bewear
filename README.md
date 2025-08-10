@@ -85,11 +85,14 @@ Acesse em: http://localhost:3000
 ```
 
 📦 Scripts Disponíveis
+
+```
 Comando Descrição
 npm run dev Inicia o servidor de desenvolvimento
 npm run build Gera a build de produção
 npm run start Inicia a aplicação em modo produção
 npm run lint Executa a verificação de lint
+```
 
 🛠 Funcionalidades
 🌗 Tema escuro/claro com Next Themes
