@@ -4,8 +4,8 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { addProductToCartSchema, AddProductToCartSchema } from "./schema";
 import { db } from "@/db";
-import { cartItemsTable, cartTable, productVariantsTable } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
+import { cartItemsTable, cartTable } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export const addProductToCart = async (data: AddProductToCartSchema) => {
   addProductToCartSchema.parse(data);

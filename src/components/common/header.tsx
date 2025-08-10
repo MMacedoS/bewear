@@ -14,7 +14,7 @@ import { authClient } from "@/lib/auth-client";
 import { Avatar } from "../ui/avatar";
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import Link from "next/link";
-import Cart from "./Cart";
+import Cart from "./cart";
 
 const Header = () => {
   const { data: session } = authClient.useSession();
