@@ -44,6 +44,7 @@ bewear/
 └── README.md            # Documentação
 ```
 
+```
 ⚡ Como Rodar o Projeto
 1️⃣ Clonar o repositório
 bash
@@ -56,6 +57,7 @@ bash
 Copiar
 Editar
 npm install
+```
 
 # ou
 
@@ -63,6 +65,7 @@ yarn install
 
 # ou
 
+```
 pnpm install
 3️⃣ Configurar variáveis de ambiente
 Crie um arquivo .env na raiz do projeto:
@@ -79,6 +82,7 @@ Copiar
 Editar
 npm run dev
 Acesse em: http://localhost:3000
+```
 
 📦 Scripts Disponíveis
 Comando Descrição
