@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🐻 Bewear
 
-## Getting Started
+**Bewear** é uma aplicação desenvolvida com **Next.js 15** e **React 19**, utilizando **Tailwind CSS 4**, **Radix UI** e **React Query** para criar uma interface moderna, responsiva e de alta performance.  
+O projeto segue boas práticas de arquitetura e tipagem com **TypeScript** e **Zod**, garantindo escalabilidade e segurança no desenvolvimento.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Tecnologias Utilizadas
+
+- **Next.js 15** – Framework React para aplicações web e APIs
+- **React 19** – Biblioteca para construção de interfaces
+- **Tailwind CSS 4** – Estilização rápida e responsiva
+- **Radix UI** – Componentes acessíveis e estilizados
+- **React Query** – Gerenciamento de estado assíncrono e cache
+- **React Hook Form** – Gerenciamento de formulários
+- **Zod** – Validação e tipagem de dados
+- **Drizzle ORM** – ORM moderno para banco de dados Postgres
+- **PostgreSQL** – Banco de dados relacional
+- **Better Auth** – Autenticação segura
+- **Lucide Icons** – Ícones minimalistas
+- **Next Themes** – Tema escuro/claro com persistência
+
+---
+
+## 📂 Estrutura do Projeto (simplificada)
+
+```plaintext
+bewear/
+│
+├── public/              # Arquivos estáticos
+├── src/                 # Código-fonte
+│   ├── components/      # Componentes reutilizáveis
+│   ├── hooks/           # Hooks customizados
+│   ├── lib/             # Configurações e utilitários
+│   ├── pages/           # Rotas da aplicação
+│   ├── services/        # Serviços (APIs, auth, etc.)
+│   ├── styles/          # Estilos globais
+│   └── types/           # Tipagens TypeScript
+│
+├── drizzle.config.ts    # Configuração do Drizzle ORM
+├── tailwind.config.ts   # Configuração do Tailwind CSS
+├── tsconfig.json        # Configuração do TypeScript
+├── package.json         # Dependências e scripts
+└── README.md            # Documentação
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+⚡ Como Rodar o Projeto
+1️⃣ Clonar o repositório
+bash
+Copiar
+Editar
+git clone https://github.com/seuusuario/bewear.git
+cd bewear
+2️⃣ Instalar dependências
+bash
+Copiar
+Editar
+npm install
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# ou
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+yarn install
 
-## Learn More
+# ou
 
-To learn more about Next.js, take a look at the following resources:
+pnpm install
+3️⃣ Configurar variáveis de ambiente
+Crie um arquivo .env na raiz do projeto:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+env
+Copiar
+Editar
+DATABASE_URL=postgres://user:password@localhost:5432/bewear
+NEXTAUTH_SECRET=sua_chave_secreta
+NEXT_PUBLIC_API_URL=http://localhost:3000
+4️⃣ Executar a aplicação
+bash
+Copiar
+Editar
+npm run dev
+Acesse em: http://localhost:3000
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+📦 Scripts Disponíveis
+Comando Descrição
+npm run dev Inicia o servidor de desenvolvimento
+npm run build Gera a build de produção
+npm run start Inicia a aplicação em modo produção
+npm run lint Executa a verificação de lint
 
-## Deploy on Vercel
+🛠 Funcionalidades
+🌗 Tema escuro/claro com Next Themes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+🔐 Autenticação segura com Better Auth
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+📄 Validação de formulários com React Hook Form + Zod
+
+📦 Gerenciamento de estado assíncrono com React Query
+
+🎨 UI acessível e personalizável com Radix UI
+
+🗄 Integração com banco de dados PostgreSQL via Drizzle ORM
+
+⚡ Estilização rápida com Tailwind CSS
+
+✍ Autor: Mauricio Macedo
+📅 Versão: 0.1.0
+📜 Licença: MIT
