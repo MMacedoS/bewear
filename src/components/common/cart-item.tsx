@@ -6,11 +6,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { removeProductToCart } from "@/actions/remove-cart-product";
 import { toast } from "sonner";
 import { decreaseCartProductToCart } from "@/actions/decrease-cart-product-quantity";
+import { addProductToCart } from "@/actions/add-cart-product";
+import { useRemoveProductFromCart } from "@/hooks/mutation/use-remove-product-to-cart";
 
 interface productActionsProps {
   id: string;
   product_name: string;
   product_variant_name: string;
+  product_variant_id: string;
   product_variant_image_url: string;
   product_variant_price_in_cents: number;
   quantity: number;
@@ -22,17 +25,11 @@ const CartItem = ({
   product_variant_name,
   product_variant_image_url,
   product_variant_price_in_cents,
+  product_variant_id,
   quantity,
 }: productActionsProps) => {
   const queryClient = useQueryClient();
-
-  const removeProductToCartMutation = useMutation({
-    mutationKey: ["remove-cart-product"],
-    mutationFn: () => removeProductToCart({ cart_item_id: id }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
-    },
-  });
+  const removeProductToCartMutation = useRemoveProductFromCart(id);
 
   const handleDeleteClick = () => {
     removeProductToCartMutation.mutate(undefined, {
@@ -55,6 +52,19 @@ const CartItem = ({
 
   const handleDecrementClick = () => {
     decrementProductToCartMutation.mutate();
+  };
+
+  const incrementProductToCartMutation = useMutation({
+    mutationKey: ["increment-cart-product"],
+    mutationFn: () =>
+      addProductToCart({ product_variant_id: product_variant_id, quantity: 1 }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+    },
+  });
+
+  const handleIncrementClick = () => {
+    incrementProductToCartMutation.mutate();
   };
 
   return (
@@ -81,7 +91,11 @@ const CartItem = ({
               <MinusIcon />
             </Button>
             <p className="text-xs">{quantity}</p>
-            <Button className="h-4 w-4" variant="ghost" onClick={() => {}}>
+            <Button
+              className="h-4 w-4"
+              variant="ghost"
+              onClick={handleIncrementClick}
+            >
               <PlusIcon />
             </Button>
           </div>

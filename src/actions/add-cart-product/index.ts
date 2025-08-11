@@ -42,15 +42,18 @@ export const addProductToCart = async (data: AddProductToCartSchema) => {
   });
 
   if (cartItem) {
+    let qtde = cartItem.quantity + data.quantity;
     await db
       .update(cartItemsTable)
-      .set({ quantity: data.quantity })
+      .set({ quantity: qtde })
       .where(eq(cartItemsTable.id, cartItem.id));
-  } else {
-    await db.insert(cartItemsTable).values({
-      cart_id: cart.id,
-      product_variant_id: data.product_variant_id,
-      quantity: data.quantity,
-    });
+    return;
   }
+
+  await db.insert(cartItemsTable).values({
+    cart_id: cart.id,
+    product_variant_id: data.product_variant_id,
+    quantity: data.quantity,
+  });
+  return;
 };

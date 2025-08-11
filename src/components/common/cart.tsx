@@ -9,18 +9,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
-import { useQuery } from "@tanstack/react-query";
-import { getCart } from "@/actions/get-cart";
-import Image from "next/image";
 import CartItem from "./cart-item";
 import { Separator } from "../ui/separator";
 import { formatCentsToBRL } from "@/helpers/money";
+import { useCart } from "@/hooks/queries/use-carts";
 
 const Cart = () => {
-  const { data: cart, isPending: isCartLoading } = useQuery({
-    queryKey: ["cart"],
-    queryFn: () => getCart(),
-  });
+  const { data: cart, isPending: isCartLoading } = useCart();
 
   return (
     <Sheet>
@@ -55,6 +50,7 @@ const Cart = () => {
                         }
                         quantity={item.quantity}
                         id={item.id}
+                        product_variant_id={item.product_variant.id}
                       />
                     }
                   </div>
