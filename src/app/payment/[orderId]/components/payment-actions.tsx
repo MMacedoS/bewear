@@ -18,7 +18,6 @@ const PaymentActions = ({ orderId }: PaymentActionsProps) => {
   const handleSimulatePayment = async () => {
     setIsProcessing(true);
 
-    // Simular delay do processamento do pagamento
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     toast.success("Pagamento processado com sucesso!");

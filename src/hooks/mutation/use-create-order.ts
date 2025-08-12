@@ -8,11 +8,9 @@ export const useCreateOrder = () => {
   return useMutation({
     mutationFn: (data: CreateOrderSchema) => createOrder(data),
     onSuccess: () => {
-      // Invalidar cache do carrinho para refletir as mudanças
       queryClient.invalidateQueries({
         queryKey: ["cart"],
       });
-      // Invalidar cache de pedidos se existir
       queryClient.invalidateQueries({
         queryKey: ["orders"],
       });

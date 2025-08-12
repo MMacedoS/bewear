@@ -1,6 +1,5 @@
 import { OrderStatus } from "@/db/schema";
 
-// Função utilitária para formatar status do pedido
 export const getOrderStatusDisplay = (status: OrderStatus) => {
   const statusMap = {
     pending: {
@@ -39,7 +38,6 @@ export const getOrderStatusDisplay = (status: OrderStatus) => {
   );
 };
 
-// Lista de todos os status para uso em formulários/seletores
 export const ORDER_STATUS_OPTIONS = [
   { value: "pending", label: "Pendente" },
   { value: "confirmed", label: "Confirmado" },

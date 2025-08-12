@@ -23,7 +23,6 @@ const PaymentPage = async ({ params }: PaymentPageProps) => {
     redirect("/");
   }
 
-  // Buscar o pedido com todos os dados
   const order = await db.query.orderTable.findFirst({
     where: (o, { eq, and }) =>
       and(eq(o.id, orderId), eq(o.user_id, session.user.id)),
@@ -51,7 +50,6 @@ const PaymentPage = async ({ params }: PaymentPageProps) => {
         </p>
       </div>
 
-      {/* Resumo do Pedido */}
       <Card className="w-full mx-auto">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -138,7 +136,6 @@ const PaymentPage = async ({ params }: PaymentPageProps) => {
         </CardContent>
       </Card>
 
-      {/* Opções de Pagamento */}
       <PaymentActions orderId={order.id} />
     </div>
   );

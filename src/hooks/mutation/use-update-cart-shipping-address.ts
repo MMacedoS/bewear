@@ -9,7 +9,6 @@ export const useUpdateCartShippingAddress = () => {
     mutationFn: (data: UpdateCartShippingAddressSchema) =>
       updateCartShippingAddress(data),
     onSuccess: () => {
-      // Invalidar cache do carrinho para refletir as mudanças
       queryClient.invalidateQueries({
         queryKey: ["cart"],
       });

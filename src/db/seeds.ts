@@ -588,7 +588,6 @@ async function main() {
         category_id: categoryId,
       });
 
-      // Inserir variantes do produto
       for (const variantData of productData.variants) {
         const variantId = crypto.randomUUID();
         const productKey = productData.name as keyof typeof productImages;
