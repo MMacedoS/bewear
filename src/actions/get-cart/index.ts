@@ -6,6 +6,7 @@ import {
   cartTable,
   productTable,
   productVariantsTable,
+  shippingAddressTable,
 } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
@@ -16,6 +17,7 @@ type CartWithItems = typeof cartTable.$inferSelect & {
       product: typeof productTable.$inferSelect;
     };
   })[];
+  shippingAddress: typeof shippingAddressTable.$inferSelect | null;
   totalQuantity: number;
   totalPriceInCents: number;
 };
@@ -29,6 +31,9 @@ export const getCart = async (): Promise<CartWithItems | null> => {
 
   const cart = await db.query.cartTable.findFirst({
     where: (c, { eq }) => eq(c.user_id, session.user.id),
+    with: {
+      shippingAddress: true,
+    },
   });
 
   // Se não existir carrinho, cria um vazio
@@ -42,6 +47,7 @@ export const getCart = async (): Promise<CartWithItems | null> => {
     return {
       ...newCart,
       items: [],
+      shippingAddress: null,
       totalQuantity: 0,
       totalPriceInCents: 0,
     };

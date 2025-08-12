@@ -6,7 +6,20 @@ import {
   text,
   timestamp,
   uuid,
+  pgEnum,
 } from "drizzle-orm/pg-core";
+
+// Enum para status do pedido
+export const orderStatusEnum = pgEnum("order_status", [
+  "pending",
+  "confirmed",
+  "shipped",
+  "delivered",
+  "cancelled",
+]);
+
+// Tipo TypeScript para o status do pedido
+export type OrderStatus = (typeof orderStatusEnum.enumValues)[number];
 
 export const userTable = pgTable("user", {
   id: text("id").primaryKey(),
@@ -26,6 +39,7 @@ export const userTable = pgTable("user", {
 
 export const userRelations = relations(userTable, ({ many, one }) => ({
   shippingAddresses: many(shippingAddressTable),
+  orders: many(orderTable),
   cart: one(cartTable, {
     fields: [userTable.id],
     references: [cartTable.user_id],
@@ -213,3 +227,84 @@ export const cartItemRelations = relations(cartItemsTable, ({ one }) => ({
     references: [productVariantsTable.id],
   }),
 }));
+
+// Tabela de endereços dos pedidos (snapshot do endereço no momento do pedido)
+export const orderShippingAddressTable = pgTable("order_shipping_address", {
+  id: uuid().primaryKey().defaultRandom(),
+  recipient_name: text().notNull(),
+  street: text().notNull(),
+  number: text(),
+  complement: text(),
+  neighborhood: text().notNull(),
+  zipCode: text().notNull(),
+  city: text().notNull(),
+  state: text().notNull(),
+  country: text().notNull(),
+  phone: text().notNull(),
+  email: text().notNull(),
+  cpf_or_cnpj: text().notNull(),
+  created_at: timestamp().notNull().defaultNow(),
+});
+
+// Tabela de pedidos
+export const orderTable = pgTable("order", {
+  id: uuid().primaryKey().defaultRandom(),
+  user_id: text()
+    .notNull()
+    .references(() => userTable.id, { onDelete: "cascade" }),
+  order_shipping_address_id: uuid()
+    .notNull()
+    .references(() => orderShippingAddressTable.id, { onDelete: "restrict" }),
+  status: orderStatusEnum().notNull().default("pending"),
+  total_amount_in_cents: integer().notNull(),
+  created_at: timestamp().notNull().defaultNow(),
+  updated_at: timestamp().notNull().defaultNow(),
+});
+
+export const orderRelations = relations(orderTable, ({ one, many }) => ({
+  user: one(userTable, {
+    fields: [orderTable.user_id],
+    references: [userTable.id],
+  }),
+  shippingAddress: one(orderShippingAddressTable, {
+    fields: [orderTable.order_shipping_address_id],
+    references: [orderShippingAddressTable.id],
+  }),
+  items: many(orderItemsTable),
+}));
+
+// Tabela de itens dos pedidos (snapshot dos produtos no momento do pedido)
+export const orderItemsTable = pgTable("order_item", {
+  id: uuid().primaryKey().defaultRandom(),
+  order_id: uuid()
+    .notNull()
+    .references(() => orderTable.id, { onDelete: "cascade" }),
+  // Snapshot dos dados do produto no momento do pedido
+  product_name: text().notNull(),
+  product_variant_name: text().notNull(),
+  product_variant_color: text().notNull(),
+  product_variant_image_url: text().notNull(),
+  price_in_cents: integer().notNull(), // Preço no momento do pedido
+  quantity: integer().notNull(),
+  total_in_cents: integer().notNull(), // price_in_cents * quantity
+  original_product_id: uuid(),
+  original_product_variant_id: uuid(),
+  created_at: timestamp().notNull().defaultNow(),
+});
+
+export const orderItemRelations = relations(orderItemsTable, ({ one }) => ({
+  order: one(orderTable, {
+    fields: [orderItemsTable.order_id],
+    references: [orderTable.id],
+  }),
+}));
+
+export const orderShippingAddressRelations = relations(
+  orderShippingAddressTable,
+  ({ one }) => ({
+    order: one(orderTable, {
+      fields: [orderShippingAddressTable.id],
+      references: [orderTable.order_shipping_address_id],
+    }),
+  })
+);

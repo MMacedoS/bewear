@@ -64,6 +64,17 @@ const Header = () => {
                       <LogOutIcon />
                     </Button>
                   </div>
+                  <div className="mt-6 flex flex-col gap-3">
+                    <Link href="orders" className="text-sm">
+                      Meus Pedidos
+                    </Link>
+                    <Link href="categories" className="text-sm">
+                      Categorias
+                    </Link>
+                    <Link href="profile" className="text-sm">
+                      Perfil
+                    </Link>
+                  </div>
                 </>
               ) : (
                 <div className="flex items-center justify-between">

@@ -17,6 +17,7 @@ const IdentificationPage = async () => {
     where: (cart, { eq }) => eq(cart.user_id, session.user.id),
     with: {
       items: true,
+      shippingAddress: true,
     },
   });
 
